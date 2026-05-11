@@ -15,12 +15,18 @@ public class CatalogoService {
     @Autowired private EstadoAnimoRepositorio estadoAnimoRepositorio;
     @Autowired private EstadoCitaRepositorio estadoCitaRepositorio;
     @Autowired private PreguntaRepositorio preguntaRepositorio;
-    @Autowired private EspecialidadRepositorio especialidadRepositorio;
-    @Autowired private UsuarioRepositorio usuarioRepositorio;
-    @Autowired private TrackingRepositorio trackingRepositorio;
-    @Autowired private CitaRepositorio citaRepositorio;
-    @Autowired private RespuestaRepositorio respuestaRepositorio;
-    @Autowired private ProfesionalRepositorio profesionalRepositorio;
+    @Autowired
+    private EspecialidadRepositorio especialidadRepositorio;
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private TrackingRepositorio trackingRepositorio;
+    @Autowired
+    private CitaRepositorio citaRepositorio;
+    @Autowired
+    private RespuestaRepositorio respuestaRepositorio;
+    @Autowired
+    private ProfesionalRepositorio profesionalRepositorio;
 
     public List<RolDTO> listarRoles() { return rolRepositorio.findAll().stream().map(r -> new RolDTO(r.getIdRol(), r.getNombre())).toList(); }
     public List<EstadoAnimoDTO> listarEstadosAnimo() { return estadoAnimoRepositorio.findAll().stream().map(e -> new EstadoAnimoDTO(e.getIdEstadoAnimo(), e.getNombre(), e.getDescripcion())).toList(); }
