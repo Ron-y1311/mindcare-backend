@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TrackingDTO
 {
+    //Valida propiedades de tracking
     private Long idTracking;
     private Long estadoAnimoId;
     private LocalDateTime fecha;
