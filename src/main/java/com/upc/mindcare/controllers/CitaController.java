@@ -47,7 +47,7 @@ public class CitaController {
     public void reprogramar(@PathVariable Long id, @RequestBody CitaDTO dto) {
         citaService.reprogramarCita(id, dto.getFecha());
     }
-
+    //Cancelar cita puede ser ejecutado por un paciente, el profesional puede acceder pero solo para recibir la informacion de cancelacion
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('PACIENTE', 'PROFESIONAL')")
     public void cancelar(@PathVariable Long id) {
