@@ -34,6 +34,7 @@ public class ProfesionalController {
         return profesionalService.actualizarPerfilProfesional(id, profesionalDTO);
     }
 
+    //En este edpoint se va a asociar especialidades a profesionales 
     @PutMapping("/{id}/especialidades")
     @PreAuthorize("hasRole('PROFESIONAL')")
     public ProfesionalDTO asociarEspecialidades(
