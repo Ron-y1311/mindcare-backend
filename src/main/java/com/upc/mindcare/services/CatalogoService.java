@@ -28,11 +28,25 @@ public class CatalogoService {
     @Autowired
     private ProfesionalRepositorio profesionalRepositorio;
 
-    public List<RolDTO> listarRoles() { return rolRepositorio.findAll().stream().map(r -> new RolDTO(r.getIdRol(), r.getNombre())).toList(); }
-    public List<EstadoAnimoDTO> listarEstadosAnimo() { return estadoAnimoRepositorio.findAll().stream().map(e -> new EstadoAnimoDTO(e.getIdEstadoAnimo(), e.getNombre(), e.getDescripcion())).toList(); }
-    public List<EstadoCitaDTO> listarEstadosCita() { return estadoCitaRepositorio.findAll().stream().map(e -> new EstadoCitaDTO(e.getIdEstadoCita(), e.getNombre())).toList(); }
-    public List<PreguntaDTO> listarPreguntas() { return preguntaRepositorio.findAll().stream().map(p -> new PreguntaDTO(p.getIdPregunta(), p.getTexto())).toList(); }
-    public List<EspecialidadDTO> listarEspecialidades() { return especialidadRepositorio.findAll().stream().map(this::mapEspecialidad).toList(); }
+    public List<RolDTO> listarRoles()
+    { return rolRepositorio.findAll().stream().map(r -> new RolDTO(r.getIdRol(),
+            r.getNombre())).toList();
+    }
+    public List<EstadoAnimoDTO> listarEstadosAnimo()
+    { return estadoAnimoRepositorio.findAll().stream().map(e -> new EstadoAnimoDTO(e.getIdEstadoAnimo()
+            , e.getNombre(), e.getDescripcion())).toList();
+    }
+    public List<EstadoCitaDTO> listarEstadosCita()
+    { return estadoCitaRepositorio.findAll().stream().map(e -> new EstadoCitaDTO(e.getIdEstadoCita(),
+            e.getNombre())).toList();
+    }
+    public List<PreguntaDTO> listarPreguntas() {
+        return preguntaRepositorio.findAll().stream().map(p -> new PreguntaDTO(p.
+                getIdPregunta(), p.getTexto())).toList();
+    }
+    public List<EspecialidadDTO> listarEspecialidades() {
+        return especialidadRepositorio.findAll().stream().map(this::mapEspecialidad).toList(); 
+    }
 
     @Transactional public RolDTO crearRol(RolDTO dto) { Rol rol = new Rol(null, dto.getNombre()); return new RolDTO(rolRepositorio.save(rol).getIdRol(), rol.getNombre()); }
     @Transactional public RolDTO actualizarRol(Long id, RolDTO dto) { Rol rol = rolRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Rol no encontrado")); rol.setNombre(dto.getNombre()); return new RolDTO(rolRepositorio.save(rol).getIdRol(), rol.getNombre()); }
