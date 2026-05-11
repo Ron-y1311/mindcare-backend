@@ -18,6 +18,7 @@ public class ProfesionalController {
     @Autowired
     private ProfesionalService profesionalService;
 
+    //Solo los profesionales pueden ver como completan su perfil
     @PostMapping
     @PreAuthorize("hasRole('PROFESIONAL')")
     public ProfesionalDTO completarPerfilProfesional(@Valid @RequestBody ProfesionalDTO profesionalDTO) {
