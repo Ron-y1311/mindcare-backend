@@ -65,7 +65,8 @@ public class SecurityConfig {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
+    
+    //Codigo para cloud
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public CorsFilter corsFilter(@Value("${ip.frontend}") String frontendUrl) {
