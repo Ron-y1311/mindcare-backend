@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+
+//Serevicio  encargado de cargar los datos del usuario desde la base de datos para realizar la autenticación y asignar sus roles en Spring Security.
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
