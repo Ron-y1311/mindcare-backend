@@ -11,10 +11,14 @@ import java.util.List;
 
 @Service
 public class CatalogoService {
-    @Autowired private RolRepositorio rolRepositorio;
-    @Autowired private EstadoAnimoRepositorio estadoAnimoRepositorio;
-    @Autowired private EstadoCitaRepositorio estadoCitaRepositorio;
-    @Autowired private PreguntaRepositorio preguntaRepositorio;
+    @Autowired
+    private RolRepositorio rolRepositorio;
+    @Autowired
+    private EstadoAnimoRepositorio estadoAnimoRepositorio;
+    @Autowired
+    private EstadoCitaRepositorio estadoCitaRepositorio;
+    @Autowired
+    private PreguntaRepositorio preguntaRepositorio;
     @Autowired
     private EspecialidadRepositorio especialidadRepositorio;
     @Autowired
@@ -45,7 +49,7 @@ public class CatalogoService {
                 getIdPregunta(), p.getTexto())).toList();
     }
     public List<EspecialidadDTO> listarEspecialidades() {
-        return especialidadRepositorio.findAll().stream().map(this::mapEspecialidad).toList(); 
+        return especialidadRepositorio.findAll().stream().map(this::mapEspecialidad).toList();
     }
 
     @Transactional public RolDTO crearRol(RolDTO dto) { Rol rol = new Rol(null, dto.getNombre()); return new RolDTO(rolRepositorio.save(rol).getIdRol(), rol.getNombre()); }
