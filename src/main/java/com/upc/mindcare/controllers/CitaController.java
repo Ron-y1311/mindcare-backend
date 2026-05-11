@@ -35,7 +35,7 @@ public class CitaController {
     public List<CitaDTO> listarPorProfesional(@PathVariable Long id) {
         return citaService.listarCitasPorProfesional(id);
     }
-
+    //Confirmar cita puede ser accedido solo por el profesional
     @PutMapping("/{id}/confirmar")
     @PreAuthorize("hasRole('PROFESIONAL')")
     public void confirmarCita(@PathVariable Long id) {

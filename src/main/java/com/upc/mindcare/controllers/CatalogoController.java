@@ -18,17 +18,15 @@ public class CatalogoController {
     @Autowired
     private CatalogoService catalogoService;
 
-    /* =========================
-       ROLES
-       ADMIN
-    ========================= */
 
+    //Listar roles (solo es posible con el rol ADMIN)
     @GetMapping("/roles")
     @PreAuthorize("hasRole('ADMIN')")
     public List<RolDTO> listarRoles() {
         return catalogoService.listarRoles();
     }
 
+    //Creacion de roles (solo es posible con el rol ADMIN)
     @PostMapping("/roles")
     @PreAuthorize("hasRole('ADMIN')")
     public RolDTO crearRol(@Valid @RequestBody RolDTO dto) {
