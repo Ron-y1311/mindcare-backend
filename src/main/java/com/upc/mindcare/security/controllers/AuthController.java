@@ -38,6 +38,10 @@ public class AuthController {
         this.usuarioRepositorio = usuarioRepositorio;
     }
 
+    //*Metodo encargado de autenticar al usuario mediante correo y contraseña.
+    // * Si las credenciales son válidas, se genera un token JWT y se devuelve
+    // * junto con la información básica del usuario y sus roles.*/
+    
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponseDTO> createAuthenticationToken(@RequestBody AuthRequestDTO authRequest) {
         Authentication authentication = authenticationManager.authenticate(
