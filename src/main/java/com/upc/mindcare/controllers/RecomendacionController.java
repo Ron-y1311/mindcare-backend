@@ -1,5 +1,6 @@
 package com.upc.mindcare.controllers;
 
+import com.upc.mindcare.dtos.RecomendacionDTO;
 import com.upc.mindcare.services.RecomendacionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,11 @@ public class RecomendacionController {
     @PreAuthorize("hasRole('PACIENTE')")
     public String generarAlertaPreventiva(@PathVariable Long pacienteId) {
         return recomendacionService.generarAlertaPreventiva(pacienteId);
+    }
+
+    @GetMapping("/paciente/{pacienteId}/resumen")
+    @PreAuthorize("hasRole('PACIENTE')")
+    public RecomendacionDTO generarResumenRecomendacion(@PathVariable Long pacienteId) {
+        return recomendacionService.generarResumenRecomendacion(pacienteId);
     }
 }

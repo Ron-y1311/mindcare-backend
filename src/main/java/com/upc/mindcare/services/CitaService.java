@@ -45,6 +45,7 @@ public class CitaService {
     public CitaDTO agendarCita(CitaDTO dto) {
         Paciente paciente = pacienteRepositorio.findById(dto.getPacienteId())
                 .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
         Profesional profesional = profesionalRepositorio.findById(dto.getProfesionalId())
                 .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
 
@@ -63,7 +64,9 @@ public class CitaService {
     public List<CitaDTO> listarCitasPorPaciente(Long pacienteId) {
         pacienteRepositorio.findById(pacienteId)
                 .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
-        return citaRepositorio.findByPaciente_PacienteId(pacienteId).stream()
+
+        return citaRepositorio.findByPaciente_PacienteId(pacienteId)
+                .stream()
                 .map(this::mapToDTO)
                 .toList();
     }
@@ -71,7 +74,9 @@ public class CitaService {
     public List<CitaDTO> listarCitasPorProfesional(Long profesionalId) {
         profesionalRepositorio.findById(profesionalId)
                 .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
-        return citaRepositorio.findByProfesional_IdProfesional(profesionalId).stream()
+
+        return citaRepositorio.findByProfesional_IdProfesional(profesionalId)
+                .stream()
                 .map(this::mapToDTO)
                 .toList();
     }
@@ -85,12 +90,16 @@ public class CitaService {
     public void reprogramarCita(Long citaId, LocalDateTime nuevaFecha) {
         Cita cita = citaRepositorio.findById(citaId)
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+
         if (nuevaFecha == null) {
             throw new RuntimeException("La nueva fecha es obligatoria");
         }
+
         validarFechaDisponible(cita.getProfesional().getIdProfesional(), nuevaFecha);
+
         cita.setFecha(nuevaFecha);
         cita.setEstadoCita(obtenerEstadoPorNombre(ESTADO_REPROGRAMADA));
+
         citaRepositorio.save(cita);
     }
 
@@ -108,8 +117,10 @@ public class CitaService {
     public void cambiarEstadoCita(Long citaId, Long estadoId) {
         Cita cita = citaRepositorio.findById(citaId)
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+
         EstadoCita estado = estadoCitaRepositorio.findById(estadoId)
                 .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
+
         cita.setEstadoCita(estado);
         citaRepositorio.save(cita);
     }
@@ -119,7 +130,9 @@ public class CitaService {
         Cita cita = citaRepositorio.findById(citaId)
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada"));
 
-        if (esVacio(citaDTO.getNota()) && esVacio(citaDTO.getObservacionesClinicas()) && esVacio(citaDTO.getPlanAccion())) {
+        if (esVacio(citaDTO.getNota())
+                && esVacio(citaDTO.getObservacionesClinicas())
+                && esVacio(citaDTO.getPlanAccion())) {
             throw new RuntimeException("La nota clinica debe tener contenido valido");
         }
 
@@ -128,6 +141,7 @@ public class CitaService {
         cita.setPlanAccion(citaDTO.getPlanAccion());
         cita.setEstadoNota(citaDTO.getEstadoNota() != null ? citaDTO.getEstadoNota() : "REGISTRADA");
         cita.setFechaNota(LocalDateTime.now());
+
         citaRepositorio.save(cita);
     }
 
@@ -139,12 +153,14 @@ public class CitaService {
     public CitaDTO obtenerNotaClinicaPorCita(Long citaId) {
         Cita cita = citaRepositorio.findById(citaId)
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+
         return mapToDTO(cita);
     }
 
     private void cambiarEstadoPorNombre(Long citaId, String nombreEstado) {
         Cita cita = citaRepositorio.findById(citaId)
                 .orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+
         cita.setEstadoCita(obtenerEstadoPorNombre(nombreEstado));
         citaRepositorio.save(cita);
     }
@@ -153,6 +169,7 @@ public class CitaService {
         if (fecha == null) {
             throw new RuntimeException("La fecha de la cita es obligatoria");
         }
+
         if (citaRepositorio.existsByProfesional_IdProfesionalAndFecha(profesionalId, fecha)) {
             throw new RuntimeException("El horario seleccionado no esta disponible. Seleccione un horario alternativo");
         }
@@ -160,9 +177,11 @@ public class CitaService {
 
     private EstadoCita obtenerEstadoPorNombre(String nombre) {
         EstadoCita estado = estadoCitaRepositorio.findByNombre(nombre);
+
         if (estado == null) {
             throw new RuntimeException("Estado " + nombre + " no encontrado");
         }
+
         return estado;
     }
 
@@ -172,6 +191,7 @@ public class CitaService {
 
     private CitaDTO mapToDTO(Cita cita) {
         CitaDTO dto = modelMapper.map(cita, CitaDTO.class);
+
         if (cita.getPaciente() != null) {
             dto.setPacienteId(cita.getPaciente().getPacienteId());
 
@@ -187,7 +207,12 @@ public class CitaService {
                 dto.setNombreProfesional(cita.getProfesional().getUsuario().getNombre());
             }
         }
-        if (cita.getEstadoCita() != null) dto.setEstadoCitaId(cita.getEstadoCita().getIdEstadoCita());
+
+        if (cita.getEstadoCita() != null) {
+            dto.setEstadoCitaId(cita.getEstadoCita().getIdEstadoCita());
+            dto.setEstadoCitaNombre(cita.getEstadoCita().getNombre());
+        }
+
         return dto;
     }
 }

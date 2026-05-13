@@ -13,17 +13,18 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CitaDTO
-{
+public class CitaDTO {
+
     private Long idCita;
 
     @NotNull(message = "Fecha obligatoria")
     private LocalDateTime fecha;
+
     private String nombrePaciente;
     private String nombreProfesional;
+
     @NotBlank(message = "Motivo obligatorio")
     private String motivoConsulta;
-
 
     private String nota;
     private String observacionesClinicas;
@@ -38,9 +39,5 @@ public class CitaDTO
     private Long profesionalId;
 
     private Long estadoCitaId;
-
-
-
+    private String estadoCitaNombre;
 }
-
-
